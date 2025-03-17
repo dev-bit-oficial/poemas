@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poemas de Hugo Elias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color:#323639;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .file-selector {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .select-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+        }
+
+        .select-btn:hover {
+            background-color: #0069d9;
+        }
+
+        .file-name {
+            color: #ddd;
+            font-size: 14px;
+        }
+
+        .pdf-container {
+            display: flex;
+            width: 100%;
+            min-height: 500px;
+            border: 1px solid #ddd;
+        }
+
+        .controls {
+            width: 200px;
+            background-color:#323639;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            font-size: 40px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            margin: 20px 0;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .zoom-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .zoom-level {
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .viewer {
+            flex-grow: 1;
+            background-color: #5f6368;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            position: relative;
+        }
+
+        #pdf-viewer {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-message {
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttons {
+            justify-content: space-between;
+            margin-top: 10px;
+            display: flex;
+            width: 70%;
+        }
+
+        .prev-page {
+            margin-right: auto;
+        }
+
+        .next-page {
+            margin-left: auto;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Menú flotante */
+        .menu-float {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            background: rgb(80, 80, 80);
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            width: 158px;
+            cursor: default;
+        }
+
+        .menu-float a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 10px;
+            background: #007bff;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .menu-float a:hover {
+            background: #0056b3;
+        }
+
+        /* Botón flotante */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 25%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .menu-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="pdf-container" class="pdf-container">
+        <div class="controls">
+            <input type="file" id="pdf-upload">
+            <div class="file-selector">
+                <label onclick="toggleMenu()" class="select-btn">Seleccionar Poema</label>
+                <div class="menu-float" id="menu">
+                    <a href="#poema1" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/de-hugo-elias/poema 1.pdf')">Poema 1</a>
+                </div>
+            </div>
+            <div class="file-selector">
+                <span class="file-name" id="file-name">Ningún poema seleccionado</span>
+            </div>
+            <div class="buttons">
+                <button id="prev-page" class="nav-btn prev-page" disabled>
+                    <svg viewBox="0 0 448 512" width="45" title="arrow-left" fill="white">
+                        <path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" />
+                    </svg>
+                </button>
+                <button id="next-page" class="nav-btn next-page" disabled>
+                    <svg viewBox="0 0 448 512" width="45" title="arrow-right" fill="white">
+                        <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="page-info">
+                <div>Página <span id="page-num">0</span> de <span id="page-count">0</span></div>
+            </div>
+            <div class="zoom-controls">
+                <button id="zoom-out" class="zoom-btn" disabled>-</button>
+                <span id="zoom-level" class="zoom-level">100%</span>
+                <button id="zoom-in" class="zoom-btn" disabled>+</button>
+            </div>
+        </div>
+        <div class="viewer">
+            <div id="loading-message" class="loading-message">Seleccione un poema para visualizarlo</div>
+            <canvas id="pdf-viewer" class="hidden"></canvas>
+        </div>
+    </div>
+
+    <!-- PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script>
+        // Configurar el worker de PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+        // Elementos del DOM
+        const fileInput = document.getElementById('pdf-upload');
+        const fileName = document.getElementById('file-name');
+        const pdfViewer = document.getElementById('pdf-viewer');
+        const loadingMessage = document.getElementById('loading-message');
+        const prevButton = document.getElementById('prev-page');
+        const nextButton = document.getElementById('next-page');
+        const pageNum = document.getElementById('page-num');
+        const pageCount = document.getElementById('page-count');
+        const zoomIn = document.getElementById('zoom-in');
+        const zoomOut = document.getElementById('zoom-out');
+        const zoomLevel = document.getElementById('zoom-level');
+        const pdfContainer = document.getElementById('pdf-container');
+
+        // Variables para el PDF
+        let pdfDoc = null;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let currentPage = 1;
+        let scale = 1.0;
+        const ctx = pdfViewer.getContext('2d');
+
+        // Función para renderizar una página
+        function renderPage(num) {
+            pageRendering = true;
+            
+            // Mostrar cargando
+            loadingMessage.textContent = 'Cargando página...';
+            loadingMessage.classList.remove('hidden');
+            pdfViewer.classList.add('hidden');
+            
+            // Obtener la página
+            pdfDoc.getPage(num).then(function(page) {
+                const viewport = page.getViewport({ scale: scale });
+                
+                // Ajustar el tamaño del canvas al viewport
+                pdfViewer.height = viewport.height;
+                pdfViewer.width = viewport.width;
+
+                // Renderizar PDF en el canvas
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                
+                const renderTask = page.render(renderContext);
+
+                // Esperar a que termine de renderizar
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    loadingMessage.classList.add('hidden');
+                    pdfViewer.classList.remove('hidden');
+                    
+                    // Si hay una página pendiente, renderizarla
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            // Actualizar el número de página actual
+            pageNum.textContent = num;
+            
+            // Habilitar/deshabilitar botones de navegación
+            prevButton.disabled = num <= 1;
+            nextButton.disabled = num >= pdfDoc.numPages;
+        }
+
+        // Función para cambiar de página
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        // Ir a la página anterior
+        function onPrevPage() {
+            if (currentPage <= 1) return;
+            currentPage--;
+            queueRenderPage(currentPage);
+        }
+
+        // Ir a la página siguiente
+        function onNextPage() {
+            if (currentPage >= pdfDoc.numPages) return;
+            currentPage++;
+            queueRenderPage(currentPage);
+        }
+
+        // Función para acercar
+        function zoomInFn() {
+            scale += 0.25;
+            zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+            queueRenderPage(currentPage);
+        }
+
+        // Función para alejar
+        function zoomOutFn() {
+            if (scale <= 0.5) return;
+            scale -= 0.25;
+            zoomLevel.textContent = `${Math.round(scale * 100)}%`;
+            queueRenderPage(currentPage);
+        }
+
+        // Cargar un PDF
+        function loadPDF(file) {
+            const fileReader = new FileReader();
+            
+            fileReader.onload = function() {
+                const typedarray = new Uint8Array(this.result);
+                
+                // Cargar el PDF con PDF.js
+                pdfjsLib.getDocument(typedarray).promise.then(function(pdf) {
+                    pdfDoc = pdf;
+                    pageCount.textContent = pdf.numPages;
+                    
+                    // Habilitar controles
+                    prevButton.disabled = false;
+                    nextButton.disabled = false;
+                    zoomIn.disabled = false;
+                    zoomOut.disabled = false;
+                    
+                    // Renderizar la primera página
+                    currentPage = 1;
+                    renderPage(currentPage);
+
+                    // Cambiar la altura del contenedor PDF
+                    pdfContainer.style.height = '100%';
+                }).catch(function(error) {
+                    console.error('Error al cargar el PDF:', error);
+                    loadingMessage.textContent = 'Error al cargar el PDF. Asegúrese de que es un archivo PDF válido.';
+                    loadingMessage.classList.remove('hidden');
+                    pdfViewer.classList.add('hidden');
+                });
+            };
+            
+            fileReader.readAsArrayBuffer(file);
+        }
+
+        // Event listeners
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                fileName.textContent = file.name;
+                loadPDF(file);
+            } else {
+                fileName.textContent = 'Por favor, seleccione un archivo PDF válido.';
+            }
+        });
+
+        function loadPDFfromURL(url) {
+            const fileNameFromURL = url.split('/').pop().replace('.pdf', '');
+            fileName.textContent = fileNameFromURL;
+            pdfjsLib.getDocument(url).promise.then(function(pdf) {
+            pdfDoc = pdf;
+            currentPage = 1;
+            renderPage(currentPage);
+            pdfContainer.style.height = '100%';
+            }).catch(function(error) {
+            console.error('Error al cargar el Poema:', error);
+            loadingMessage.textContent = 'Error al cargar el Poema.';
+            loadingMessage.classList.remove('hidden');
+            pdfViewer.classList.add('hidden');
+            });
+        }
+
+        prevButton.addEventListener('click', onPrevPage);
+        nextButton.addEventListener('click', onNextPage);
+        zoomIn.addEventListener('click', zoomInFn);
+        zoomOut.addEventListener('click', zoomOutFn);
+
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Inicialmente establecer la altura del contenedor PDF
+        pdfContainer.style.height = 'calc(100vh - 40px)';
+    </script>
+</body>
+</html>
