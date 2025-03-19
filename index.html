@@ -170,11 +170,13 @@
             gap: 10px;
             width: 158px;
             cursor: default;
+            z-index: 1000;
         }
 
         .menu-float a {
             color: white;
             text-decoration: none;
+            text-align: center;
             font-size: 14px;
             padding: 5px 10px;
             background: #007bff;
@@ -212,7 +214,9 @@
             <div class="file-selector">
                 <label onclick="toggleMenu()" class="select-btn">Seleccionar Poema</label>
                 <div class="menu-float" id="menu">
-                    <a href="#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/Ilusiones.pdf')">Poema 1</a>
+                    <a href="https://dev-bit-oficial.github.io/poemas/">Ninguno</a>
+                    <a href="#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ilusiones& por Hugo Elias.pdf')">"Ilusiones" por Hugo Elias</a>
+                    <a hidden href="#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ya Fue& por Hugo Elias.pdf')">"Ya Fue" por Hugo Elias</a>
                 </div>
             </div>
             <div class="file-selector">
@@ -231,7 +235,7 @@
                 </button>
             </div>
             <div class="page-info">
-                <div>Página <span id="page-num">0</span> de <span id="page-count">0</span></div>
+                <div>Página <span id="page-num">0</span> de <span id="page-count">??</span></div>
             </div>
             <div class="zoom-controls">
                 <button id="zoom-out" class="zoom-btn" disabled>-</button>
@@ -405,7 +409,7 @@
         });
 
         function loadPDFfromURL(url) {
-            const fileNameFromURL = url.split('/').pop().replace('.pdf', '');
+            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"Ilusiones"').replace('&Ya Fue&', '"Ya Fue"');
             fileName.textContent = fileNameFromURL;
             pdfjsLib.getDocument(url).promise.then(function(pdf) {
             pdfDoc = pdf;
