@@ -206,6 +206,30 @@
         .menu-btn:hover {
             background: #0056b3;
         }
+
+        .user {
+            display: none;
+            position: fixed;
+            bottom: 45px;
+            left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: white;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 25px;
+        }
+
+        .user img {
+            border-radius: 25%;
+            width: 30px;
+            height: 30px;
+        }
+
+        .user p {
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -217,7 +241,7 @@
                 <div class="menu-float" id="menu">
                     <a href="https://dev-bit-oficial.github.io/poemas/">Ninguno</a>
                     <a href="#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ilusiones& por Hugo Elias.pdf')">"Ilusiones" por Hugo Elias</a>
-                    <a hidden href="#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ya Fue& por Hugo Elias.pdf')">"Ya Fue" por Hugo Elias</a>
+                    <a href="#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Quisiera& por Hugo Elias.pdf')">"Quisiera" por Hugo Elias</a>
                 </div>
             </div>
             <div class="file-selector">
@@ -249,6 +273,12 @@
             <canvas id="pdf-viewer" class="hidden"></canvas>
         </div>
     </div>
+    <a href="https://www.instagram.com/la_pluma_de_hugo/" target="_blank">
+        <div class="user">
+            <img src="https://images.icon-icons.com/836/PNG/512/Instagram_icon-icons.com_66804.png" alt="Instagram">
+            <p>@la_pluma_de_hugo</p>
+        </div>
+    </a>
 
     <!-- PDF.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
@@ -410,13 +440,14 @@
         });
 
         function loadPDFfromURL(url) {
-            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"Ilusiones"').replace('&Ya Fue&', '"Ya Fue"');
+            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"Ilusiones"').replace('&Quisiera&', '"Quisiera"');
             fileName.textContent = fileNameFromURL;
             pdfjsLib.getDocument(url).promise.then(function(pdf) {
             pdfDoc = pdf;
             currentPage = 1;
             renderPage(currentPage);
-            pdfContainer.style.height = '100%';
+            pdfContainer.style.height = 'calc(100% + 40px)';
+            user.style.display = '';
             }).catch(function(error) {
             console.error('Error al cargar el Poema:', error);
             loadingMessage.textContent = 'Error al cargar el Poema.';
