@@ -230,6 +230,77 @@
         .user p {
             margin: 0;
         }
+
+        .error {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .pdf-container, .user {
+                display: none;
+            }
+
+            .error {
+                display: block;
+            }
+
+            .controls {
+                flex-direction: row;
+                width: 100%;
+                padding: 10px;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .nav-btn {
+                font-size: 30px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .page-info {
+                margin: 0 10px;
+            }
+
+            .zoom-controls {
+                margin: 0 10px;
+            }
+
+            .zoom-btn {
+                font-size: 16px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .zoom-level {
+                font-size: 12px;
+            }
+
+            .buttons {
+                width: 100%;
+            }
+
+            .menu-float {
+                top: 50px;
+                left: 10px;
+            }
+
+            .menu-float a {
+                font-size: 12px;
+                padding: 5px;
+            }
+
+            .menu-btn {
+                top: 10px;
+                left: 10px;
+            }
+
+            .user {
+                bottom: 10px;
+                left: 10px;
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -282,6 +353,89 @@
             <p>@la_pluma_de_hugo</p>
         </div>
     </a>
+
+    <div class="error">
+        <style>
+            p {
+                color: white;
+            }
+          
+            p span {
+                color: #ddd;
+            }
+    
+            .logo {
+                margin-bottom: 20px;
+            }
+    
+            .content {
+                display: flex;
+                align-items: flex-start;
+                gap: 50px;
+                padding: 20px;
+            }
+    
+            .error-text h1 {
+                font-size: 20px;
+                font-weight: normal;
+                margin-bottom: 16px;
+            }
+    
+            .error-text h1 span {
+                color: #ddd;
+                margin-left: 8px;
+            }
+    
+            .error-text p {
+                color: white;
+                margin: 0;
+                line-height: 1.5;
+            }
+    
+            .error-text p span {
+                color: #ddd;
+                margin: 0;
+                line-height: 1.5;
+            }
+    
+            .robot-image {
+                width: 200px;
+                height: 200px;
+            }
+    
+            .logo {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+            }
+    
+            @media (max-width: 768px) {
+                .content {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+    
+                .robot-image {
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+        </style>
+        <div class="content">
+            <div class="error-text">
+                <img src="https://dev-bit-oficial.github.io/ERROR/303/favicon.ico" class="logo">
+                <h1>303. <span>That’s an error</span></h1>
+                <p>Please wait and view it on your computer</p>
+                <p><span>We are adapting the page for phones.</span></p>
+            </div>
+    
+            <img src="https://dev-bit-oficial.github.io/ERROR/303/robot.png" alt="Robot illustration" class="robot-image">
+        </div>
+        <footer>
+            <p>Try with your browser of your computer <span>or contact us.</span></p>
+        </footer>
+    </div>
 
     <!-- PDF.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
