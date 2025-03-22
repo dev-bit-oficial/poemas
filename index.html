@@ -242,6 +242,8 @@
                     <a href="https://dev-bit-oficial.github.io/poemas/">Ninguno</a>
                     <a href="#Ilusiones/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ilusiones& por Hugo Elias.pdf')">"Ilusiones" por Hugo Elias</a>
                     <a href="#Quisiera/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Quisiera& por Hugo Elias.pdf')">"Quisiera" por Hugo Elias</a>
+                    <a href="#Bella-Rosa/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Bella Rosa& por Hugo Elias.pdf')">"Bella Rosa" por Hugo Elias</a>
+                    <a href="#Sueño-con-Vos/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Sueño con Vos& por Hugo Elias.pdf')">"Sueño con Vos" por Hugo Elias (𝑷𝒓𝒐́𝒙𝒊𝒎𝒂𝒎𝒆𝒏𝒕𝒆)</a>
                 </div>
             </div>
             <div class="file-selector">
@@ -440,7 +442,7 @@
         });
 
         function loadPDFfromURL(url) {
-            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"Ilusiones"').replace('&Quisiera&', '"Quisiera"');
+            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"Ilusiones"').replace('&Quisiera&', '"Quisiera"').replace('&Bella Rosa&', '"Bella Rosa"');
             fileName.textContent = fileNameFromURL;
             pdfjsLib.getDocument(url).promise.then(function(pdf) {
             pdfDoc = pdf;
