@@ -231,63 +231,36 @@
             margin: 0;
         }
 
-        .error {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .pdf-container, .user {
-                display: none;
-            }
-
-            .error {
-                display: block;
-            }
-
-            .controls {
+        /* Estilos para tablets y celulares */
+        @media only screen and (max-width: 768px) {
+            .section {
                 flex-direction: row;
-                width: 100%;
+                gap: 10px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .section .file-name {
+                margin-top: 10px;
+            }
+
+            .section .page-info {
+                margin-top: 40px;
+            }
+
+            .container {
                 padding: 10px;
-                border-right: none;
-                border-bottom: 1px solid #ddd;
             }
 
-            .nav-btn {
-                font-size: 30px;
-                width: 50px;
-                height: 50px;
-            }
-
-            .page-info {
-                margin: 0 10px;
-            }
-
-            .zoom-controls {
-                margin: 0 10px;
-            }
-
-            .zoom-btn {
-                font-size: 16px;
-                width: 20px;
-                height: 20px;
-            }
-
-            .zoom-level {
-                font-size: 12px;
-            }
-
-            .buttons {
-                width: 100%;
+            .file-selector {
+                flex-direction: column;
+                gap: 10px;
             }
 
             .menu-float {
                 top: 50px;
                 left: 10px;
-            }
-
-            .menu-float a {
-                font-size: 12px;
-                padding: 5px;
+                width: 140px;
             }
 
             .menu-btn {
@@ -298,7 +271,55 @@
             .user {
                 bottom: 10px;
                 left: 10px;
+                padding: 5px 10px;
+            }
+
+            .pdf-container {
+                display: flex;
+                flex-direction: column;
+                border: none;
+            }
+
+            .pdf-container .viewer {
+                height: auto;
+            }
+
+            .controls {
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            .buttons {
+                width: 80%;
+                margin-right: 20px;
+            }
+
+            .prev-page, .next-page {
+                width: 40px;
+                height: 40px;
+                right: 10px;
+                left: 10px;
+            }
+
+            .zoom-controls {
+                justify-content: center;
+            }
+
+            .zoom-btn {
+                width: 25px;
+                height: 25px;
+            }
+
+            .zoom-level {
                 font-size: 12px;
+            }
+
+            #pdf-viewer {
+                box-shadow: none;
+            }
+
+            .hidden {
+                display: none;
             }
         }
     </style>
@@ -306,41 +327,44 @@
 <body>
     <div id="pdf-container" class="pdf-container">
         <div class="controls">
-            <input type="file" id="pdf-upload">
-            <div class="file-selector">
-                <label onclick="toggleMenu()" class="select-btn">Seleccionar Poema</label>
-                <div class="menu-float" id="menu">
-                    <a href="https://dev-bit-oficial.github.io/poemas/">Ninguno</a>
-                    <a href="#Ilusiones/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ilusiones& por Hugo Elias.pdf')">"Ilusiones" por Hugo Elias</a>
-                    <a href="#Quisiera/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Quisiera& por Hugo Elias.pdf')">"Quisiera" por Hugo Elias</a>
-                    <a href="#Bella-Rosa/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Bella Rosa& por Hugo Elias.pdf')">"Bella Rosa" por Hugo Elias</a>
-                    <a href="https://dev-bit-oficial.github.io/poemas/">"Sueño con Vos" por Hugo Elias (𝑷𝒓𝒐́𝒙𝒊𝒎𝒂𝒎𝒆𝒏𝒕𝒆)</a>
-                    <a hidden href="#Sueño-con-Vos/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Sueño con Vos& por Hugo Elias.pdf')">"Sueño con Vos" por Hugo Elias</a>
+            <section class="section">
+                <div class="file-selector">
+                    <label onclick="toggleMenu()" class="select-btn">Seleccionar Poema</label>
+                    <div class="menu-float" id="menu">
+                        <a href="https://dev-bit-oficial.github.io/poemas/">Ninguno</a>
+                        <a href="#Ilusiones/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ilusiones& por Hugo Elias.pdf')">"Ilusiones" por Hugo Elias</a>
+                        <a href="#Quisiera/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Quisiera& por Hugo Elias.pdf')">"Quisiera" por Hugo Elias</a>
+                        <a href="#Bella-Rosa/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Bella Rosa& por Hugo Elias.pdf')">"Bella Rosa" por Hugo Elias</a>
+                        <a href="https://dev-bit-oficial.github.io/poemas/">"Sueño con Vos" por Hugo Elias (𝑷𝒓𝒐́𝒙𝒊𝒎𝒂𝒎𝒆𝒏𝒕𝒆)</a>
+                        <a hidden href="#Sueño-con-Vos/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Sueño con Vos& por Hugo Elias.pdf')">"Sueño con Vos" por Hugo Elias</a>
+                    </div>
                 </div>
-            </div>
-            <div class="file-selector">
-                <span class="file-name" id="file-name">Ningún poema seleccionado</span>
-            </div>
-            <div class="buttons">
-                <button id="prev-page" class="nav-btn prev-page" disabled>
-                    <svg viewBox="0 0 448 512" width="45" title="arrow-left" fill="white">
-                        <path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" />
-                    </svg>
-                </button>
-                <button id="next-page" class="nav-btn next-page" disabled>
-                    <svg viewBox="0 0 448 512" width="45" title="arrow-right" fill="white">
-                        <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" />
-                    </svg>
-                </button>
-            </div>
-            <div class="page-info">
-                <div>Página <span id="page-num">0</span> de <span id="page-count">??</span></div>
-            </div>
-            <div class="zoom-controls">
-                <button id="zoom-out" class="zoom-btn" disabled>-</button>
-                <span id="zoom-level" class="zoom-level">100%</span>
-                <button id="zoom-in" class="zoom-btn" disabled>+</button>
-            </div>
+                <div class="file-selector">
+                    <span class="file-name" id="file-name">Ningún poema seleccionado</span>
+                </div>
+            </section>
+            <section class="section">
+                <div class="buttons">
+                    <button id="prev-page" class="nav-btn prev-page" disabled>
+                        <svg viewBox="0 0 448 512" width="45" title="arrow-left" fill="white">
+                            <path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z" />
+                        </svg>
+                    </button>
+                    <button id="next-page" class="nav-btn next-page" disabled>
+                        <svg viewBox="0 0 448 512" width="45" title="arrow-right" fill="white">
+                            <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="page-info">
+                    <div>Página <span id="page-num">0</span> de <span id="page-count">??</span></div>
+                </div>
+                <div class="zoom-controls">
+                    <button id="zoom-out" class="zoom-btn" disabled>-</button>
+                    <span id="zoom-level" class="zoom-level">100%</span>
+                    <button id="zoom-in" class="zoom-btn" disabled>+</button>
+                </div>
+            </section>
         </div>
         <div class="viewer">
             <div id="loading-message" class="loading-message">Seleccione un poema para visualizarlo</div>
@@ -354,89 +378,6 @@
         </div>
     </a>
 
-    <div class="error">
-        <style>
-            p {
-                color: white;
-            }
-          
-            p span {
-                color: #ddd;
-            }
-    
-            .logo {
-                margin-bottom: 20px;
-            }
-    
-            .content {
-                display: flex;
-                align-items: flex-start;
-                gap: 50px;
-                padding: 20px;
-            }
-    
-            .error-text h1 {
-                font-size: 20px;
-                font-weight: normal;
-                margin-bottom: 16px;
-            }
-    
-            .error-text h1 span {
-                color: #ddd;
-                margin-left: 8px;
-            }
-    
-            .error-text p {
-                color: white;
-                margin: 0;
-                line-height: 1.5;
-            }
-    
-            .error-text p span {
-                color: #ddd;
-                margin: 0;
-                line-height: 1.5;
-            }
-    
-            .robot-image {
-                width: 200px;
-                height: 200px;
-            }
-    
-            .logo {
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-            }
-    
-            @media (max-width: 768px) {
-                .content {
-                    flex-direction: column;
-                    align-items: center;
-                    text-align: center;
-                }
-    
-                .robot-image {
-                    width: 150px;
-                    height: 150px;
-                }
-            }
-        </style>
-        <div class="content">
-            <div class="error-text">
-                <img src="https://dev-bit-oficial.github.io/ERROR/303/favicon.ico" class="logo">
-                <h1>303. <span>That’s an error</span></h1>
-                <p>Please wait and view it on your computer</p>
-                <p><span>We are adapting the page for phones.</span></p>
-            </div>
-    
-            <img src="https://dev-bit-oficial.github.io/ERROR/303/robot.png" alt="Robot illustration" class="robot-image">
-        </div>
-        <footer>
-            <p>Try with your browser of your computer <span>or contact us.</span></p>
-        </footer>
-    </div>
-
     <!-- PDF.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script>
@@ -444,7 +385,6 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
         // Elementos del DOM
-        const fileInput = document.getElementById('pdf-upload');
         const fileName = document.getElementById('file-name');
         const pdfViewer = document.getElementById('pdf-viewer');
         const loadingMessage = document.getElementById('loading-message');
@@ -584,17 +524,6 @@
             
             fileReader.readAsArrayBuffer(file);
         }
-
-        // Event listeners
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                fileName.textContent = file.name;
-                loadPDF(file);
-            } else {
-                fileName.textContent = 'Por favor, seleccione un archivo PDF válido.';
-            }
-        });
 
         function loadPDFfromURL(url) {
             const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"𝑰𝒍𝒖𝒔𝒊𝒐𝒏𝒆𝒔"').replace('&Quisiera&', '"𝑸𝒖𝒊𝒔𝒊𝒆𝒓𝒂"').replace('&Bella Rosa&', '"𝑩𝒆𝒍𝒍𝒂 𝑹𝒐𝒔𝒂"').replace('&Sueño con Vos&', '"𝑺𝒖𝒆𝒏̃𝒐 𝒄𝒐𝒏 𝑽𝒐𝒔"');
