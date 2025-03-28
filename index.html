@@ -554,6 +554,71 @@
 
         // Inicialmente establecer la altura del contenedor PDF
         pdfContainer.style.height = 'calc(100vh - 40px)';
+
+        // Mostrar un div al cargar la página
+        window.addEventListener('load', function() {
+            const newDiv = document.createElement('div');
+            newDiv.id = 'welcome-message';
+            newDiv.style.position = 'fixed';
+            newDiv.style.top = '50%';
+            newDiv.style.left = '50%';
+            newDiv.style.transform = 'translate(-50%, -50%)';
+            newDiv.style.backgroundColor = 'rgba(73, 73, 73, 0.8)';
+            newDiv.style.color = 'white';
+            newDiv.style.padding = '20px';
+            newDiv.style.borderRadius = '8px';
+            newDiv.style.textAlign = 'center';
+            newDiv.style.zIndex = '1000';
+            newDiv.innerHTML = 'Atajos de teclado:<br><br>' +
+                'Ctrl + A: Selecciona un poema.<br>' +
+                'Ctrl + R o F5: Recarga la página y redirige al inicio.<br>' +
+                'Ctrl + D o F12: Descarga el pdf del poema.<br><br>';
+            
+            document.body.appendChild(newDiv);
+
+            // Ocultar al hacer clic fuera del div
+            document.addEventListener('click', function(event) {
+            if (!newDiv.contains(event.target)) {
+                newDiv.style.display = 'none';
+            }
+            });
+        });
+
+        // Div de selección de poema para descargar
+        document.addEventListener("keydown", function(event) {
+            if ((event.ctrlKey && event.key === 'd') || event.key === 'F12') {
+                event.preventDefault();
+                alert('Descargas de Poemas deshabilitadas por navegadores que usan: Chromium, Gecko, WebKit, Goanna, KHTML o KDEWebKit.\n\n' + 'Las descargas estarán habilitadas en la versión 58652.0.35 de este sitio web. Ahora estás en la versión 139.0.254.\n\n' + 'La versión 58652.0.35 de este sitio web llegará entre 2030 y 2035.');
+            }
+        });
+
+
+        // Keydown
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 'a') {
+                event.preventDefault();
+                const menu = document.getElementById('menu');
+                menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+            }
+        });
+
+        // Manejar el evento de selección de archivo
+        document.addEventListener("keydown", function(event) {
+            if ((event.ctrlKey && event.key === 'r') || event.key === 'F5') {
+                event.preventDefault();
+                window.location.href = "https://dev-bit-oficial.github.io/poemas/";
+            }
+        });
+
+        window.addEventListener("beforeunload", function(event) {
+            window.location.href = "https://dev-bit-oficial.github.io/poemas/";
+        });
+
+        window.onload = function() {
+            if (performance.navigation.type === 1) { // 1 significa recarga
+                window.location.href = "https://dev-bit-oficial.github.io/poemas/";
+            }
+        };
     </script>
 </body>
 </html>
