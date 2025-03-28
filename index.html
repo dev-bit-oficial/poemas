@@ -335,8 +335,8 @@
                         <a href="#Ilusiones/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Ilusiones& por Hugo Elias.pdf')">"Ilusiones" por Hugo Elias</a>
                         <a href="#Quisiera/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Quisiera& por Hugo Elias.pdf')">"Quisiera" por Hugo Elias</a>
                         <a href="#Bella-Rosa/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Bella Rosa& por Hugo Elias.pdf')">"Bella Rosa" por Hugo Elias</a>
-                        <a href="https://dev-bit-oficial.github.io/poemas/">"Sueño con Vos" por Hugo Elias (𝑷𝒓𝒐́𝒙𝒊𝒎𝒂𝒎𝒆𝒏𝒕𝒆)</a>
-                        <a hidden href="#Sueño-con-Vos/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Sueño con Vos& por Hugo Elias.pdf')">"Sueño con Vos" por Hugo Elias</a>
+                        <a href="#Sueño-con-Vos/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Sueño con Vos& por Hugo Elias.pdf')">"Sueño con Vos" por Hugo Elias</a>
+                        <a href="#Año-Especial/#por-hugo-elias" onclick="loadPDFfromURL('https://dev-bit-oficial.github.io/poemas/hugo-elias/&Año Especial& por Hugo Elias.pdf')">"Año Especial" por Hugo Elias</a>
                     </div>
                 </div>
                 <div class="file-selector">
@@ -526,7 +526,7 @@
         }
 
         function loadPDFfromURL(url) {
-            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"𝑰𝒍𝒖𝒔𝒊𝒐𝒏𝒆𝒔"').replace('&Quisiera&', '"𝑸𝒖𝒊𝒔𝒊𝒆𝒓𝒂"').replace('&Bella Rosa&', '"𝑩𝒆𝒍𝒍𝒂 𝑹𝒐𝒔𝒂"').replace('&Sueño con Vos&', '"𝑺𝒖𝒆𝒏̃𝒐 𝒄𝒐𝒏 𝑽𝒐𝒔"');
+            const fileNameFromURL = url.split('/').pop().replace('.pdf', '').replace('&Ilusiones&', '"𝑰𝒍𝒖𝒔𝒊𝒐𝒏𝒆𝒔"').replace('&Quisiera&', '"𝑸𝒖𝒊𝒔𝒊𝒆𝒓𝒂"').replace('&Bella Rosa&', '"𝑩𝒆𝒍𝒍𝒂 𝑹𝒐𝒔𝒂"').replace('&Sueño con Vos&', '"𝑺𝒖𝒆𝒏̃𝒐 𝒄𝒐𝒏 𝑽𝒐𝒔"').replace('&Año Especial&', '"𝑨𝒏̃𝒐 𝑬𝒔𝒑𝒆𝒄𝒊𝒂𝒍"');
             fileName.textContent = fileNameFromURL;
             pdfjsLib.getDocument(url).promise.then(function(pdf) {
             pdfDoc = pdf;
