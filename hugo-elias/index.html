@@ -298,6 +298,15 @@
           fileTree.innerHTML = `<div class="error">${error.message}</div>`;
           repoInfo.innerHTML = '';
         }
+          const hiddenFiles = ['index.html'];
+          const filteredData = data.filter(item => !hiddenFiles.includes(item.name));
+          
+          const sortedData = [...filteredData].sort((a, b) => {
+            if (a.type === b.type) {
+              return a.name.localeCompare(b.name);
+            }
+            return a.type === 'dir' ? -1 : 1;
+          });
       }
 
       async function loadDirectory(repo, path) {
